@@ -5,7 +5,7 @@ const svg = d3.select("#pokebola")
 let drag = false;
 const shinyRate = 30;
 const shinyRoll = Math.round(Math.random()*shinyRate);
-console.log(shinyRoll)
+console.log(`Shiny Roll: ${shinyRoll}`);
 const trapinchFile = shinyRoll === 0 ? "assets/trapinch shiny.svg" : "assets/trapinch.svg";
 
 const startPos = [150, 150]; // INFLUENCIA POSIÇÃO INICIAL NA TELA
@@ -129,7 +129,6 @@ function loadPokeball() {
                         pokeballRotVelocity += angleDiff * speed * 1; // Adjust rotation speed
                         deltaYMean = deltaYMean*0.7 + deltaY
                         deltaXMean = deltaXMean*0.7 + deltaX
-                        console.log(deltaXMean)
                         if (Math.abs(speed) > 30) {
                             createSparkle(event.x, event.y, 100, null, 0);
                         }
@@ -240,7 +239,7 @@ function throwBall(ball, lastPosX, lastPosY) {
     }
 
     function catchSequence(currentX, shakeCount) {
-        console.log("COMMENCE SHAKING")
+        console.log("Shake!")
         const fleeChance = 0.3 // 30% per shake
         d3.select(pokeball).select("#ball").transition()
             .ease(d3.easeBounceOut)
@@ -254,7 +253,7 @@ function throwBall(ball, lastPosX, lastPosY) {
             .attr("transform", `rotate(0, 35, 35)`)
             .on("end", function() {
                 if (Math.random() < fleeChance) {
-                    console.log("not caught!")
+                    console.log("Not caught!")
                     ball.select("#light").transition().attr("stop-color", "#ff0000")
                     ball.select("#light2").transition().attr("stop-color", "#ff0000")
                     trapinchReappear();
@@ -262,7 +261,7 @@ function throwBall(ball, lastPosX, lastPosY) {
                     if (shakeCount < 2) {
                         catchSequence(currentX, shakeCount+1);
                     } else {
-                        console.log("caught!")
+                        console.log("Gotcha!")
                         ball.select("#light").transition().attr("stop-color", "#00eeff")
                         ball.select("#light2").transition().attr("stop-color", "#00eeff")
                     }
